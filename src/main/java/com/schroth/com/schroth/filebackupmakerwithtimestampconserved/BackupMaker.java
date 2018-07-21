@@ -6,7 +6,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.nio.file.attribute.BasicFileAttributeView;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.nio.file.attribute.FileTime;
@@ -25,7 +24,7 @@ class BackupMaker {
 
     private List<File> getBackupSourceFiles() throws Exception {
         List<File> backupSourceFiles = new ArrayList<>();
-        addSourceFileContentToList(SourceDir.BACKUP_SOUCE_DIR.toString(), backupSourceFiles);
+        addSourceFileContentToList(SourceDir.BACKUP_SOURCE_DIR.toString(), backupSourceFiles);
         return backupSourceFiles;
     }
 
@@ -43,13 +42,13 @@ class BackupMaker {
         while ((line = reader.readLine()) != null) {
             list.add(new File(line));
         }
-
-        System.out.println(list);
     }
 
     private void copyFileWithTimeStampPreservation(List<File> source, List<File> dest) throws Exception {
         if (source.size() == dest.size()) {
             for (int i = 0; i < source.size(); i++) {
+                System.out.println((i + 1) + "_CopingFile: " + source.get(i).getAbsolutePath() + System.lineSeparator() +
+                        "           to : " + dest.get(i).getAbsolutePath());
                 FileUtils.copyFile(source.get(i), dest.get(i), true);
                 copyFileTimeStamp(source.get(i), dest.get(i));
             }
