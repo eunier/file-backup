@@ -1,5 +1,5 @@
 package com.schroth.filerenamerwithtimestampconserved;
 
-public class SourceGetter {
-    
+public class SourceData {
+
 }
