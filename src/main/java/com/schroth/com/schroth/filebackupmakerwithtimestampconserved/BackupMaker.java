@@ -1,4 +1,4 @@
-package com.schroth.filerenamerwithtimestampconserved;
+package com.schroth.com.schroth.filebackupmakerwithtimestampconserved;
 
 import org.apache.commons.io.FileUtils;
 

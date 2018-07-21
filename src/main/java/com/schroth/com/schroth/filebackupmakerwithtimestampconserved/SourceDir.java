@@ -1,4 +1,4 @@
-package com.schroth.filerenamerwithtimestampconserved;
+package com.schroth.com.schroth.filebackupmakerwithtimestampconserved;
 
 public enum SourceDir {
     SOURCE_DIR              ("FileToRename\\source.txt"),

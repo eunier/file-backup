@@ -1,4 +1,4 @@
-package com.schroth.filerenamerwithtimestampconserved;
+package com.schroth.com.schroth.filebackupmakerwithtimestampconserved;
 
 public class Main {
     public static void main(String[] args) {
