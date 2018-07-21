@@ -25,7 +25,7 @@ class BackupMaker {
     private List<File> getBackupSourceFiles() throws Exception {
         List<File> backupSourceFiles = new ArrayList<>();
         addSourceFileContentToList(SourceDir.BACKUP_SOURCE_DIR.toString(), backupSourceFiles);
-        return backupSourceFiles;
+        return removeNonExistingFiles(backupSourceFiles);
     }
 
     private List<File> getBackupDestFiles() throws Exception {
@@ -45,16 +45,18 @@ class BackupMaker {
     }
 
     private void copyFileWithTimeStampPreservation(List<File> source, List<File> dest) throws Exception {
-        if (source.size() == dest.size()) {
+        if (source.size() != dest.size()) {
             for (int i = 0; i < source.size(); i++) {
-                System.out.println((i + 1) + "_CopingFile: " + source.get(i).getAbsolutePath() + System.lineSeparator() +
-                        "           to : " + dest.get(i).getAbsolutePath());
-                FileUtils.copyFile(source.get(i), dest.get(i), true);
-                copyFileTimeStamp(source.get(i), dest.get(i));
+                if (source.get(i) != null) {
+                    System.out.println((i + 1) + "_CopingFile: " + source.get(i).getAbsolutePath() + System.lineSeparator() +
+                            "           to : " + dest.get(i).getAbsolutePath());
+                    FileUtils.copyFile(source.get(i), dest.get(i), true);
+                    copyFileTimeStamp(source.get(i), dest.get(i));
+                }
             }
         }
         else {
-            System.out.println("Error, list must be the same size.");
+            System.out.println("Error, Lists must be the same size");
         }
     }
 
@@ -68,6 +70,20 @@ class BackupMaker {
         FileTime createTime = FileTime.fromMillis(sourceAttr.creationTime().toMillis());
 
         destAttr.setTimes(lastModifiedTime,lastAccessTime,createTime);
+    }
+
+    private List<File> removeNonExistingFiles(List<File> list) {
+        List<File> checkForExistenceFiles = new ArrayList<>();
+
+        for (File file : list) {
+            if (file.exists()) {
+                checkForExistenceFiles.add(file);
+            }
+            else {
+                checkForExistenceFiles.add(null);
+            }
+        }
+        return checkForExistenceFiles;
     }
 }
 
